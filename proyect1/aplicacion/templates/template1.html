@@ -1,0 +1,40 @@
+{% extends "base.html" %} <!-- este es una extension de base.htlm -->
+{% block title %} Hola, que tal {{nombre}}{% endblock %} <!-- Titulo de la web, header title -->
+{% block content %} <!-- Comienzo del contenido -->
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+  Presiona el boton
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Salidos!!!</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h4>
+          {% if nombre != none %}
+          Hola {{ nombre }}
+          {% else %}
+          Nombre no encontrado
+          {% endif %}
+        </h4>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+        <div class="d-grid gap-2">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% block styles %}
+{{ super() }} <!-- Carga los estilos de la base -->
+<link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}"> <!--Carga tus propios estilos-->
+{% endblock %}
+{% endblock %} <!-- Fin del contenido -->>

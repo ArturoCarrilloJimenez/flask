@@ -1,0 +1,7 @@
+{% extends "formulario/base2.html" %}
+{% block title %}Resultado{% endblock %}
+{% block contenido %}
+    <h2>Resultado de la operacion</h2>
+    <h3>{{num1}} {{operador}} {{num2}} = {{resultado}}</h3>
+    <a href="{{url_for('inicio')}}">Volver al inicio</a>
+{% endblock %}

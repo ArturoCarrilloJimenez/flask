@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Formulario{% endblock %}
+{% block navbar %}
+
+<nav class="navbar navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Trabajando con formuularios</a>
+  </div>
+</nav>
+<div class="mt-4 p-5 bg-secondary text-white rounded">
+  <h1>Formulario</h1>
+  <p>En estos ejemplos vamos a trabajar con formularios HTML5, y como podemos procesar los resultados enviados por los formularios.</p>
+</div>
+
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-8">
+      {% block contenido %}{% endblock %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}

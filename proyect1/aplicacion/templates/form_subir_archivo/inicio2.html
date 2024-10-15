@@ -1,0 +1,14 @@
+{% extends 'formulario/base2.html' %}
+{% block title %}Galeria de imagenes{% endblock title %}
+
+{% block contenido %}
+    <h2>Galeria de imagenes</h2>
+
+    {% for list in lista %}
+        <img src="{{ url_for('static', filename='img/') }}{{ list }}" style="max-width:500px;">
+    {% endfor %}
+    <br>
+    <a href="{{ url_for('upload') }}">Subir imagen</a>
+    <br>
+    
+{% endblock contenido %}

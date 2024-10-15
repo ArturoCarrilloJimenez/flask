@@ -1,0 +1,53 @@
+{% extends "base2.html" %}
+{% block title %}Tienda{% endblock title %}
+{% block contenido %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-2">
+            <h3>Categorias...</h3>
+            <div class="list-group">
+                {% for cat in categorias %}
+                {% if categoria.nombre == cat.nombre %}
+                <a href="{{url_for('inicio',id = cat.id)}}" class="list-group-item active">{{cat.nombre}}</a>
+                {% else %}
+                <a href="{{url_for('inicio',id = cat.id)}}" class="list-group-item">{{cat.nombre}}</a>
+                {% endif %}
+                {% endfor %}
+            </div>
+            <br>
+            <div><a href="{{ url_for('articulos_new') }}" class="btn btn-primary" role="button">Nuevo videoJuego</a></div>
+            <div><a href="{{ url_for('categorias_new') }}" class="btn btn-secondary" role="button">Nuevo videoJuego</a></div>
+        </div>
+
+        <div class="col-md-10">
+            <h3>Nuestros videojuegos... ({{categoria.nombre}})</h3>
+            <div class="panel panel-defaul">
+                <table class="table table-bordered">
+                    <tr>
+                        <th></th>
+                        <th>Nombre</th>
+                        <th>Descripcion</th>
+                        <th>PVP</th>
+                        <th>Compra</th>
+                        <th>Modificar</th>
+                    </tr>
+                    {% for art in articulos %}
+                    <tr>
+                        {% if art.image %}
+                        <td><img style="width: 120px;" src="{{url_for('static', filename='img/')}}{{art.image}}"></td>
+                        {% else %}
+                        <td><img style="width: 120px;" src="{{url_for('static', filename='img/not-found.png')}}"></td>
+                        {% endif %}
+                        <td>{{ art.nombre }}</td>
+                        <td>{{ art.descripcion }}</td>
+                        <td>{{ art.precio_final() }}</td>
+                        <td><a href="#"><span class="glyphicon glyphicon-shopping-cart"></span>Comprar</a></td>
+                        <td><a href="{{ url_for('articulos_edit', id=art.id) }}"><span class="glyphicon glyphicon-pencil"></span>Modificar</a></td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock contenido %}

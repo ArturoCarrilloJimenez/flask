@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block title %} Tabla de multiplicar de {{numplantilla}} {% endblock %}
+{% block content %}
+  <h2>Tabla de multiplicar</h2>
+  {% for i in range(1,11) -%}
+    <p>{{numplantilla}} * {{i}} = {{numplantilla*i}}</p>
+  {% endfor -%}
+{% endblock %}

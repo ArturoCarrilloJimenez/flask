@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    {% block head %}
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--Carga el style de bootstrap, con esto no puedo utilizarlo-->
+    {% block styles %}
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+    {{ bootstrap.load_css() }}
+    {% endblock %}
+    <title>{% block title %}{% endblock %}</title>
+    {% endblock %}
+</head>
+
+<body>
+    {% block navbar %}{% endblock %}
+    {% block content %}{% endblock %}
+
+    <!-- Carga el contenido de js de bootstrap -->
+    {% block scripts %}
+    {{ bootstrap.load_js() }}
+    {% endblock %}
+</body>
+
+</html>

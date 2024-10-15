@@ -1,0 +1,10 @@
+services:
+  python:
+    container_name: flask
+    hostname: flask
+    tty: true
+    image: "python"
+    ports:
+      - 8080:8080
+    volumes:
+      - .:/flask

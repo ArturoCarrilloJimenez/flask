@@ -1,0 +1,21 @@
+{% extends "base2.html" %}
+{% block title %}Tienda{% endblock title %}
+{% block contenido %}
+    <div class="container">
+        <div class="row">
+            <h3>Categoria</h3>
+            <div class="list-group">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Nombre</th>
+                    </tr>
+                    {% for cat in categorias %}
+                        <tr>
+                            <td><a href="{{url_for('inicio',id = cat.id)}}" class="text-decoration-none text-dark">{{cat.nombre}}</a></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock contenido %}

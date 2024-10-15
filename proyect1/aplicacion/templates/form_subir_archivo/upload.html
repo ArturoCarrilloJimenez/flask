@@ -1,0 +1,15 @@
+{% extends 'formulario/base2.html' %}
+{% block title %}Subir imagen{% endblock title %}
+{% block contenido %}
+    <h2>Subir imagenes</h2>
+    {% for field, errors in form.errors.items() %}
+        <div class="alert alert-danget">
+            {{ form[field].label }}: {{ ', '.join(errors) }}
+        </div>
+    {% endfor %}
+    <form action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data">
+        {{ form.csrf_token }}
+        {{ form.photo.label() }}{{ form.photo }} <br> <br>
+        {{ form.submit() }}
+    </form>
+{% endblock contenido %}

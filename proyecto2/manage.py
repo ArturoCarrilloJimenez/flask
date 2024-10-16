@@ -1,6 +1,7 @@
 from aplication.app import app, db
-from aplication.model import Articulos, Categorias
+from aplication.model import Articulos, Categorias, Usuarios
 from click import echo
+from getpass import getpass
 app.config['DEBUG'] = True
 
 @app.cli.command('create_tables')
@@ -35,3 +36,17 @@ def add_data_tables() :
     for jue in juegos :
         db.session.add(Articulos(**jue))
         db.session.commit()
+
+@app.cli.command('create_admin')
+def create_admin() :
+    usuario = {
+        "username": input("Usuario: "),
+        "password": getpass('Password: '),
+        'nombre' : input('Nombre completo: '),
+        "email": input("Email: "),
+        'admin' : True
+    }
+    use = Usuarios(**usuario)
+    db.session.add(use)
+    db.session.commit()
+

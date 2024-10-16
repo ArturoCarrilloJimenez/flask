@@ -160,3 +160,4 @@ def categorias_delete(id) :
             db.session.commit()
         return redirect(url_for('categorias'))
     return render_template('categorias_delete.html', form = form, cat = cat)
+

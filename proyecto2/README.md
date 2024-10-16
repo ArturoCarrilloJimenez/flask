@@ -13,3 +13,9 @@ flask --app proyect1/manage.py run --host=0.0.0.0 --port=8080 --debug
 ```bash
 pip freeze > requirements.txt
 ```
+
+### Crear data base con el modelo y añadir datos
+
+```bash
+sh restar_db.sh 
+```

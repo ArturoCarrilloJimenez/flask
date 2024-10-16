@@ -30,6 +30,7 @@
                         <th>PVP</th>
                         <th>Compra</th>
                         <th>Modificar</th>
+                        <th>Eliminar</th>
                     </tr>
                     {% for art in articulos %}
                     <tr>
@@ -41,8 +42,9 @@
                         <td>{{ art.nombre }}</td>
                         <td>{{ art.descripcion }}</td>
                         <td>{{ art.precio_final() }}</td>
-                        <td><a href="#"><span class="glyphicon glyphicon-shopping-cart"></span>Comprar</a></td>
-                        <td><a href="{{ url_for('articulos_edit', id=art.id) }}"><span class="glyphicon glyphicon-pencil"></span>Modificar</a></td>
+                        <td><a href="#"><i class="bi bi-cart-plus-fill "></i>Comprar</a></td>
+                        <td><a href="{{ url_for('articulos_edit', id=art.id) }}"><i class="bi bi-pencil-square"></i>Modificar</a></td>
+                        <td><a href="{{ url_for('articulos_delete', id=art.id) }}"><i class="bi bi-trash3"></i>Eliminar</a></td>
                     </tr>
                     {% endfor %}
                 </table>

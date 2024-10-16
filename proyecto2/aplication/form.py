@@ -12,6 +12,11 @@ class formArticulos(FlaskForm) :
     stock = IntegerField('Stock: ', default=1, validators=[DataRequired('Tienes que introducir el dato')])
     CategoriaId = SelectField('Categoria', coerce=int)
     submit = SubmitField('Enviar')
+
 class formCategorias(FlaskForm) :
     nombre = StringField('Nombre: ', validators=[DataRequired('Tienes que introducir el dato')])
     submit = SubmitField('Enviar')
+
+class formSiNo(FlaskForm) :
+    si = SubmitField('Si')
+    no = SubmitField('No')

@@ -2,7 +2,7 @@ import os
 from flask import Flask, abort, render_template, url_for, redirect, request
 from flask_bootstrap import Bootstrap5
 from aplication import config
-from aplication.form import formArticulos, formCategorias
+from aplication.form import formArticulos, formCategorias, formSiNo
 from werkzeug.utils import secure_filename
 from aplication.model import Articulos, Categorias, db
 
@@ -84,7 +84,10 @@ def articulos_edit(id) :
     if form.validate_on_submit() :
         if form.photo.data : # En caso de subir una nueva imagen elimino la anterior
 
-            if art.image : os.remove(app.root_path + '/static/img/' + art.image) # Si tiene imagen asociada la elimino
+            if art.image : 
+                count_img = Articulos.query.filter_by(image=art.image).count() # Saco todos los registros con esa imagen
+                if count_img == 1 : # Si solo hay uno, lo elimino
+                    os.remove(app.root_path + '/static/img/' + art.image) # Si tiene imagen asociada la elimino
 
             try : # Guardado de imagen
                 f = form.photo.data
@@ -106,3 +109,54 @@ def articulos_edit(id) :
         return redirect(url_for('inicio'))
 
     return render_template('articulos_new.html', form=form)
+
+@app.route('/articulos/<id>/delete', methods=['get', 'post'])
+def articulos_delete(id) :
+    art = Articulos.query.get(id) # Optengo el id por parametro de a ruta
+
+    if art is None :
+        abort(404)
+    
+    form = formSiNo()
+
+    if form.validate_on_submit() :
+        if form.si.data :
+            if art.image :
+                count_img = Articulos.query.filter_by(image=art.image).count() # Saco todos los registros con esa imagen y los cuenta
+
+                if count_img == 1 : # Si solo hay uno, lo elimino
+                    os.remove(app.root_path + '/static/img/' + art.image) # Si tiene imagen asociada la elimino
+
+            db.session.delete(art)
+            db.session.commit()
+        return redirect(url_for('inicio'))
+    return render_template('articulos_delete.html', form = form, art = art)
+
+@app.route('/categorias/<id>/edit', methods=['get', 'post'])
+def categorias_edit(id) :
+    cat = Categorias.query.get(id)
+
+    if cat is None :
+        abort(404)
+
+    form = formCategorias(request.form, obj = cat)
+    if form.validate_on_submit() :
+        form.populate_obj(cat)
+        db.session.commit()
+        return redirect(url_for('categorias'))
+    return render_template('categorias_new.html', form = form)
+
+@app.route('/categorias/<id>/delete', methods=['get', 'post'])
+def categorias_delete(id) :
+    cat = Categorias.query.get(id)
+
+    if cat is None :
+        abort(404)
+
+    form = formSiNo()
+    if form.validate_on_submit() :
+        if form.si.data :
+            db.session.delete(cat)
+            db.session.commit()
+        return redirect(url_for('categorias'))
+    return render_template('categorias_delete.html', form = form, cat = cat)

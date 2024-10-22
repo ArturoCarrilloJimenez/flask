@@ -12,3 +12,6 @@ def logout_user() :
 
 def is_login() :
     return session.get('id') is not None
+
+def is_admin() :
+    return session.get('admin') == True

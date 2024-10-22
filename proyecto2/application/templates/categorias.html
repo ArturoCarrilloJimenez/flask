@@ -12,8 +12,10 @@
                     {% for cat in categorias %}
                         <tr>
                             <td><a href="{{url_for('inicio',id = cat.id)}}" class="text-decoration-none text-dark">{{cat.nombre}}</a></td>
+                            {% if is_admin %}
                             <td><a href="{{ url_for('categorias_edit', id=cat.id) }}"><i class="bi bi-pencil-square"></i>Modificar</a></td>
                             <td><a href="{{ url_for('categorias_delete', id=cat.id) }}"><i class="bi bi-trash3"></i>Eliminar</a></td>
+                            {% endif %}
                         </tr>
                     {% endfor %}
                 </table>

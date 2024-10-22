@@ -32,3 +32,7 @@ class formUser(FlaskForm) :
     nombre = StringField('Nombre', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired()])
     submit = SubmitField('Entrar')
+
+class formChangePassword(FlaskForm) :
+    password = PasswordField('Password', validators=[DataRequired()])
+    submit = SubmitField('Aceptar')

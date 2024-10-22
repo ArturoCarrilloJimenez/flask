@@ -1,5 +1,5 @@
-from aplication.app import app, db
-from aplication.model import Articulos, Categorias, Usuarios
+from application.app import app, db
+from application.model import Articulos, Categorias, Usuarios
 from click import echo
 from getpass import getpass
 app.config['DEBUG'] = True

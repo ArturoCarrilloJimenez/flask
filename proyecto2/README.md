@@ -5,10 +5,10 @@
 ```bash
 source entornovirtual/bin/activate
 
-flask --app proyect1/manage.py run --host=0.0.0.0 --port=8080 --debug
+flask --app proyecto2/manage.py run --host=0.0.0.0 --port=8080 --debug
 ```
 
-### Acualizar archivo requerimientos
+### Acuatizar archivo requerimientos
 
 ```bash
 pip freeze > requirements.txt

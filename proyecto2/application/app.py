@@ -1,11 +1,11 @@
 import os
 from flask import Flask, abort, render_template, url_for, redirect, request
 from flask_bootstrap import Bootstrap5
-from aplication import config
-from aplication.form import formArticulos, formCategorias, formSiNo
+from application import config
+from application.form import formArticulos, formCategorias, formSiNo, formUser, LoginForm
 from werkzeug.utils import secure_filename
-from aplication.model import Articulos, Categorias, db
-
+from application.model import Articulos, Categorias, Usuarios, db
+from application.login import login_user, logout_user, is_login
 
 app = Flask(__name__)
 bootstrap = Bootstrap5(app)
@@ -161,3 +161,38 @@ def categorias_delete(id) :
         return redirect(url_for('categorias'))
     return render_template('categorias_delete.html', form = form, cat = cat)
 
+@app.route('/login', methods=['get', 'post'])
+def login() :
+    if is_login() :
+        return redirect(url_for('inicio'))
+    form = LoginForm()
+    if form.validate_on_submit() :
+        user = Usuarios.query.filter_by(username = form.username.data).first()
+        if user!=None and user.verify_password(form.password.data) :
+            login_user(user)
+            next  = request.args.get('next')
+            return redirect(next or url_for('inicio'))
+        form.username.errors.append('Usuario o contraseña incorrecta')
+    return render_template('login.html', form = form)
+
+@app.route('/logout')
+def logout() :
+    logout_user()
+    return redirect(url_for('login'))
+
+@app.route('/registro', methods=['get', 'post'])
+def registro():
+    if is_login() :
+        return redirect(url_for('inicio'))
+    form = formUser()
+    if form.validate_on_submit() :
+        existe_usuario = Usuarios.query.filter_by(username = form.username.data).first()
+        if existe_usuario is None :
+            user = Usuarios()
+            form.populate_obj(user)
+            user.admin = False
+            db.session.add(user)
+            db.session.commit()
+            return redirect(url_for('login'))
+        form.username.errors.append('Nombre de usuario ya existe')
+    return render_template('registro.html', form = form)

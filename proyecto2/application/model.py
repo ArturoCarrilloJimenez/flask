@@ -2,6 +2,7 @@ from sqlalchemy import Boolean, Column, ForeignKey, DateTime, Integer, String, T
 from sqlalchemy.orm import relationship
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import UserMixin
 db = SQLAlchemy()
 
 # Clases de categorias
@@ -43,7 +44,7 @@ class Articulos(db.Model) : # Clases de articulos
     def __repr__(self):
         return (u'<{self.__class__.__name__}: {self.id}>'.format(self = self))
 
-class Usuarios(db.Model) : # Clases de usuarios
+class Usuarios(db.Model, UserMixin) : # Clases de usuarios
     """Registro de Usuarios"""
     __tablename__ = 'usuarios'
 
@@ -68,18 +69,6 @@ class Usuarios(db.Model) : # Clases de usuarios
 
     def verify_password(self, password) :
         return check_password_hash(self.password_hash, password)
-    
-    def is_authenticated(self) :
-        return True
-
-    def is_active(self) :
-        return True
-    
-    def is_anonymous(self) :
-        return False
-    
-    def get_id(self) :
-        return str(self.id)
     
     def is_admin(self) :
         return self.admin

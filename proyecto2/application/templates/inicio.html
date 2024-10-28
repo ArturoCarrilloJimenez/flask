@@ -50,7 +50,7 @@
                         <td>{{ art.descripcion }}</td>
                         <td>{{ art.precio_final() }}</td>
                         {% if current_user.is_authenticated %}
-                        <td><a href="#"><i class="bi bi-cart-plus-fill "></i>Comprar</a></td>
+                        <td><a href="{{ url_for('add_carrito', id=art.id) }}"><i class="bi bi-cart-plus-fill "></i>Comprar</a></td>
                         {% endif %}
                         {% if current_user.is_authenticated and current_user.is_admin() %}
                         <td><a href="{{ url_for('articulos_edit', id=art.id) }}"><i class="bi bi-pencil-square"></i>Modificar</a></td>

@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import DecimalField, IntegerField, PasswordField, SelectField, StringField, SubmitField, TextAreaField
-from wtforms.validators import DataRequired
+from wtforms import DecimalField, IntegerField, PasswordField, SelectField, StringField, SubmitField, TextAreaField, HiddenField
+from wtforms.validators import DataRequired, NumberRange
 from flask_wtf.file import FileField
 
 class formArticulos(FlaskForm) :
@@ -35,4 +35,9 @@ class formUser(FlaskForm) :
 
 class formChangePassword(FlaskForm) :
     password = PasswordField('Password', validators=[DataRequired()])
+    submit = SubmitField('Aceptar')
+
+class formCarrrito(FlaskForm) :
+    id = HiddenField()
+    cantidad =  IntegerField('Cantidad', default=1, validators=[NumberRange(min=1, message='Debes de ingresar un numero positivo'), DataRequired('Tienes que introducir el dato')])
     submit = SubmitField('Aceptar')

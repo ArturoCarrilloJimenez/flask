@@ -1,0 +1,36 @@
+{% extends 'base2.html' %}
+{% block title %}Tienda{% endblock title %}
+{% block contenido %}
+    <div class="container">
+        <div class="row">
+            <h3>Carrito de la compra</h3>
+            <br><br><br>
+            {% if total > 0 %}
+                <div class="list-group">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Cantidad</th>
+                            <th>Precio</th>
+                            <th>Total</th>
+                            <th>Eliminar</th>
+                        </tr>
+                        {% for art in articulos %}
+                        <tr>
+                            <th>{{ art.0.nombre }}</th>
+                            <th>{{ art.1 }}</th>
+                            <th>{{ art.0.precio_final() }}</th>
+                            <th>{{ art.0.precio_final() * art.1 }}</th>
+                            <th><a href="{{ url_for('carrito_delete', id = art.0.id) }}"><i class="bi bi-trash3"></i>Eliminar</a></th>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                    <h2>Total: {{ total }}</h2>
+                    <a href="{{ url_for('pedido') }}" class="btn btn-primary"  role="button">Comprar</a>
+                </div>
+            {% else %}
+                <h2>No hay artículos en el carrito</h2>
+            {% endif %}
+        </div>
+    </div>
+{% endblock contenido %}

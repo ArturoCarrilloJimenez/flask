@@ -1,0 +1,11 @@
+{% extends 'base2.html' %}
+{% block title %}Tienda{% endblock title %}
+{% block contenido %}
+    <div class="container">
+        <div class="row">
+            <h3>Gracias por comprar en nuestra tienda</h3>
+            <h2>Tienes que pagar: {{ total }}</h2>
+            <a href="{{ url_for('inicio') }}" class="btn- btn-primary" role="button">Finalizar</a>
+        </div>
+    </div>
+{% endblock contenido %}

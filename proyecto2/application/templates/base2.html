@@ -3,13 +3,14 @@
 
 {% block navbar %}
 <!-- https://getbootstrap.com/docs/5.0/components/navbar/#nav -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="/">Tienda</a>
 
         {% if current_user.is_authenticated %}
+        <a href="/carrito" class="navbar-brand">Carrito <span class="badge">{{ num_articulos }}</span></a>
         <a href="/perfil/{{ current_user.username }}" class="navbar-brand">Perfil</a>
-        <a href="/logout" class="navbar-brand">Hola, {{ current_user.username }} (Salir)</a>
+        <a href="/logout" class="navbar-brand">{{ current_user.username }} (Salir)</a>
         {% else %}
         <a href="/login" class="navbar-brand">Login</a>
         <a href="/registro" class="navbar-brand">Registro</a>

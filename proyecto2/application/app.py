@@ -289,3 +289,62 @@ def add_carrito(id) :
             return resp
         form.cantidad.errors.append('No hay articulos suficientes')
     return render_template('carrito_add.html', form = form, art = art)
+
+@app.route('/carrito')
+@login_required
+def carrito() :
+    try :
+        datos = json.loads(request.cookies.get(str(current_user.id)))
+    except :
+        datos = []
+    articulos = []
+    cantidad = []
+    total = 0
+    for data in datos :
+        articulos.append(Articulos.query.get(data['id']))
+        cantidad.append(data['cantidad'])
+        total += Articulos.query.get(data['id']).precio_final() * data['cantidad']
+    articulos = zip(articulos, cantidad)
+
+    return render_template('carrito.html', articulos = articulos, total = total)
+
+@app.context_processor
+def contar_carrito() :
+    if not current_user.is_authenticated :
+        return {'num_articulos' : 0}
+    if request.cookies.get(str(current_user.id)) is None :
+        return {'num_articulos' : 0}
+    else :
+        datos = json.loads(request.cookies.get(str(current_user.id)))
+        return {'num_articulos' : len(datos)}
+
+@app.route('/carrito_delete/<id>')
+@login_required
+def carrito_delete(id) :
+    try :
+        datos = json.loads(request.cookies.get(str(current_user.id)))
+    except :
+        datos = []
+    new_datos = []
+    for date in datos :
+        if date['id'] != id :
+            new_datos.append(date)
+    resp = make_response(redirect(url_for('carrito')))
+    resp.set_cookie(str(current_user.id), json.dumps(new_datos))
+    return resp
+
+@app.route('/pedido')
+@login_required
+def pedido() :
+    try :
+        datos = json.loads(request.cookies.get(str(current_user.id)))
+    except :
+        datos = []
+    total = 0
+    for data in datos :
+        total += Articulos.query.get(data['id']).precio_final() * data['cantidad']
+        Articulos.query.get(data['id']).stock -= data['cantidad']
+        db.session.commit()
+    resp = make_response(render_template('pedido.html', total = total))
+    resp.set_cookie(str(current_user.id), '', expires=0)
+    return resp
